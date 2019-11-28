@@ -1,5 +1,5 @@
 # @open-node/graceful
-make the error object with custom defines
+Node.js process reload graceful
 
 [![Build status](https://travis-ci.com/open-node/graceful.svg?branch=master)](https://travis-ci.org/open-node/graceful)
 [![codecov](https://codecov.io/gh/open-node/graceful/branch/master/graph/badge.svg)](https://codecov.io/gh/open-node/graceful)
@@ -64,9 +64,9 @@ regist event listenner for exiting
 
 #### Parameters
 
--   `listenner` **[function][10]** 
+-   `listenner` **[function][10]**
 
-Returns **void** 
+Returns **void**
 
 ### runner
 
