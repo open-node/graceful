@@ -1,0 +1,29 @@
+{
+  "name": "@open-node/graceful",
+  "version": "0.1.0",
+  "description": "Node.js process reload graceful",
+  "main": "src/graceful.js",
+  "scripts": {
+    "lint": "eslint ./src/*",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch src",
+    "readme": "d=`head -n 40 README.md` && (echo \"$d\n\n\n\" && documentation build src/** -f md) > README.md",
+    "release": "npm publish --registry=https://registry.npmjs.org --access=public",
+    "release:github": "npm publish --registry=https://npm.pkg.github.com/"
+  },
+  "pre-commit": ["lint", "test"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-node/graceful.git"
+  },
+  "keywords": ["process", "graceful"],
+  "author": "Redstone Zhao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/open-node/graceful/issues"
+  },
+  "homepage": "https://github.com/open-node/graceful#readme",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
