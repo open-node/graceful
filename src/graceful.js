@@ -79,9 +79,14 @@ function Graceful(info) {
     // 当前状态正在退出，阻止执行函数
     if (exiting) throw Error("process exiting");
     count += 1;
-    const res = await fn(...args);
-    count -= 1;
-    return res;
+    try {
+      const res = await fn(...args);
+      count -= 1;
+      return res;
+    } catch (e) {
+      count -= 1;
+      throw e;
+    }
   };
 
   /**
