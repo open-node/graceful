@@ -148,4 +148,42 @@ describe("Graceful", () => {
 
     process.exit = processExit;
   });
+
+  it("exit async callback", async () => {
+    process.on = jest.fn(processOn.bind(process));
+    let count = 0;
+    const exitCallback = () =>
+      new Promise(resolve => {
+        setTimeout(() => {
+          count += 1;
+          resolve();
+        }, 200);
+      });
+    const graceful = Graceful(info);
+    const fn = jest.fn(() => 20);
+    const fnGraceful = graceful.runner(fn);
+
+    graceful.exit(exitCallback);
+    process.on.mockReturnValueOnce("mock on");
+
+    expect(fnGraceful(1, 2, 3)).toBe(20);
+    expect(fn.mock.calls.length).toBe(1);
+    expect(fn.mock.calls.pop()).toEqual([1, 2, 3]);
+
+    const [sigint, exitFn] = process.on.mock.calls.pop();
+    expect(sigint).toBe("SIGINT");
+    expect(typeof exitFn).toBe("function");
+    process.on = processOn;
+
+    expect(graceful.enabled()).toBe(true);
+
+    // 此时触发了退出命令
+    exitFn();
+
+    await sleep(200);
+
+    expect(count).toBe(1);
+
+    process.exit = processExit;
+  });
 });

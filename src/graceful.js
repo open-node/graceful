@@ -16,7 +16,20 @@ function Graceful(info) {
     }
     exiting = true;
     // 执行事件回调函数
-    for (const cb of callbacks) cb();
+    for (const cb of callbacks) {
+      count += 1;
+      try {
+        const ret = cb();
+        if (ret && ret.then && ret.catch) {
+          ret.then(() => (count -= 1)).catch(() => (count -= 1));
+        } else {
+          count -= 1;
+        }
+      } catch (e) {
+        info(e);
+        count -= 1;
+      }
+    }
 
     // 每秒一次去检测是否所有函数执行都已完毕，可以退出
     const timer = setInterval(() => {
