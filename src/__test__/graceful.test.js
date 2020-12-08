@@ -114,7 +114,7 @@ describe("Graceful", () => {
     expect(process.exit.mock.calls.length).toBe(1);
     expect(process.exit.mock.calls.pop()).toEqual([0]);
     await expect(fnGraceful()).rejects.toThrow("exiting");
-    expect(exitFn()).toBeUndefined();
+    expect(await exitFn()).toBeUndefined();
     expect(info.mock.calls.pop()[0]).toMatch("process exiting");
 
     process.exit = processExit;

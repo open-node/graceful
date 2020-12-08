@@ -9,7 +9,7 @@ function Graceful(info) {
   let count = 0; // 函数执行计数器
   const callbacks = [];
 
-  process.on("SIGINT", () => {
+  const exitHandle = async () => {
     if (exiting) {
       info("process exiting..., wait please");
       return;
@@ -40,7 +40,10 @@ function Graceful(info) {
       clearInterval(timer);
       process.exit(0);
     }, 1000);
-  });
+  };
+
+  process.on("SIGTERM", exitHandle);
+  process.on("SIGINT", exitHandle);
 
   /**
    * regist event listenner for exiting
