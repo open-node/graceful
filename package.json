@@ -1,6 +1,6 @@
 {
   "name": "@open-node/graceful",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Node.js process reload graceful",
   "main": "src/graceful.js",
   "scripts": {

@@ -1,3 +1,5 @@
+const process = require("process");
+
 /**
  * @class
  * @param {function} info log info output
@@ -10,6 +12,7 @@ function Graceful(info) {
   const callbacks = [];
 
   const exitHandle = async () => {
+    info("process exiting start");
     if (exiting) {
       info("process exiting..., wait please");
       return;
@@ -17,6 +20,7 @@ function Graceful(info) {
     exiting = true;
     // 执行事件回调函数
     for (const cb of callbacks) {
+      info("process exiting, callback running");
       count += 1;
       try {
         const ret = cb();
@@ -26,7 +30,7 @@ function Graceful(info) {
           count -= 1;
         }
       } catch (e) {
-        info(e);
+        info("process exiting, callback running faid", e);
         count -= 1;
       }
     }
